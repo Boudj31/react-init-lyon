@@ -7,6 +7,8 @@ import Form from './components/Form';
 import Clock from './components/Clock';
 import GameList from './components/exercice/GameList';
 import { CounterF } from './fonctionnal-components/Counter';
+import { MappingF } from './fonctionnal-components/Mapping';
+import { FormF } from './fonctionnal-components/Form';
 
 // HOOKS
 // useState // permettre d'encapsuler un etat dans ma fonction
@@ -15,10 +17,18 @@ import { CounterF } from './fonctionnal-components/Counter';
 
 const App = () => {
 
+
+  const listUser = [
+    {id: 1, name: "John Doe", age: 25},
+    {id: 2, name: "Johnny Doe", age: 25},
+    {id: 3, name: "JoJo Doe", age: 25},
+    {id: 4, name: "Johnathan Doe", age: 25},
+]
   const [name, setName] = useState("Rachid") // desctructuration [value, setValue]
   const [age, setAge] = useState(25) 
   const [isLogged, setIsLogged] = useState(true)
   const [background, setBackground] = useState("bg-white text-gray-900 p-4 mt-2")
+  const [users, setUsers] = useState(listUser)
 
 
   const changeName = () => {
@@ -81,6 +91,20 @@ const App = () => {
              <CounterF titre={"Titre 1"} />
              </section>
 
+               {/*  Tableau et mapping  */}
+               <section className='my-5'>
+               <h2>Les Tableaux</h2>
+               <div className='h-1 w-full bg-white mb-3'></div>
+
+              <MappingF users={users} />
+      
+             </section>
+   {/*  Les Formulaires  */}
+          <section className='my-5'>
+               <h2>Les Formulaires</h2>
+               <div className='h-1 w-full bg-white mb-3'></div>
+                <FormF />
+             </section>
 
            </main>
 
