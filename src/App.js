@@ -1,14 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { Component, useState } from 'react'
-import Counter from './components/Counter';
-import Mapping from './components/Mapping';
-import Form from './components/Form';
-import Clock from './components/Clock';
-import GameList from './components/exercice/GameList';
+import React, { Component, useEffect, useState } from 'react'
 import { CounterF } from './fonctionnal-components/Counter';
 import { MappingF } from './fonctionnal-components/Mapping';
 import { FormF } from './fonctionnal-components/Form';
+import ClockF from './fonctionnal-components/Clock';
+import GameList from './fonctionnal-components/GameList';
+import axios from 'axios';
 
 // HOOKS
 // useState // permettre d'encapsuler un etat dans ma fonction
@@ -17,7 +15,8 @@ import { FormF } from './fonctionnal-components/Form';
 
 const App = () => {
 
-
+ 
+  const API_URL = "https://api.rawg.io/api/games?page=1&page_size=40&key=1a1da50d2a494e649705f2ac3234b944"
   const listUser = [
     {id: 1, name: "John Doe", age: 25},
     {id: 2, name: "Johnny Doe", age: 25},
@@ -29,10 +28,30 @@ const App = () => {
   const [isLogged, setIsLogged] = useState(true)
   const [background, setBackground] = useState("bg-white text-gray-900 p-4 mt-2")
   const [users, setUsers] = useState(listUser)
+  const [games, setGames] = useState([])
+
+  useEffect(() => {
+   fetchGames()
+  }, [] )
+
+  const fetchGames = () => {
+    axios.get(API_URL).then((res) => {
+      setGames(res.data.results)
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+  
+
+  // fetch -> Promise
+  // axios -> Promise
+
+  // http -> Observable
 
 
   const changeName = () => {
     setName("Yanis")
+
   }
 
   const login = () => {
@@ -105,6 +124,20 @@ const App = () => {
                <div className='h-1 w-full bg-white mb-3'></div>
                 <FormF />
              </section>
+
+             <section className='my-5'>
+               <h2>UseEffect</h2>
+               <div className='h-1 w-full bg-white mb-3'></div>
+               <ClockF />
+             </section>
+
+             <section className='my-5'>
+               <h2>Exercice</h2>
+               <div className='h-1 w-full bg-white mb-3'></div>
+               <GameList games={games} />
+             </section>
+
+           
 
            </main>
 
